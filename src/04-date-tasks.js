@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value);
 }
 
 
@@ -73,8 +73,24 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const dateStart = new Date(startDate);
+  const dateEnd = new Date(endDate);
+  const diff = dateEnd - dateStart;
+  // eslint-disable-next-line radix
+  let milliseconds = parseInt((diff % 1000));
+  // eslint-disable-next-line radix
+  let seconds = parseInt((diff / 1000) % 60);
+  // eslint-disable-next-line radix
+  let minutes = parseInt((diff / (1000 * 60)) % 60);
+  // eslint-disable-next-line radix
+  let hours = parseInt((diff / (1000 * 60 * 60)) % 24);
+  hours = (hours < 10) ? `0${hours}` : hours;
+  minutes = (minutes < 10) ? `0${minutes}` : minutes;
+  seconds = (seconds < 10) ? `0${seconds}` : seconds;
+  // eslint-disable-next-line no-nested-ternary
+  milliseconds = (milliseconds < 10) ? `${milliseconds}00` : (milliseconds < 100) ? `${milliseconds}0` : milliseconds;
+  return `${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
 
 
@@ -95,6 +111,20 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(/* date */) {
+  // const curDate = new Date(date);
+  // let hour = curDate.getHours();
+  // let minute = curDate.getMinutes();
+  // if (hour === 12) hour = 0;
+  // if (minute === 60) {
+  //   minute = 0;
+  //   hour += 1;
+  //   if (hour > 12) hour -= 12;
+  // }
+  // const hourAngle = 0.5 * (hour * 60 + minute);
+  // const minuteAngle = 6 * minute;
+  // let angle = Math.abs(hourAngle - minuteAngle);
+  // angle = Math.min(360 - angle, angle);
+  // return angle * (Math.PI / 180.0);
   throw new Error('Not implemented');
 }
 
